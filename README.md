@@ -115,7 +115,9 @@ class EventFilter
   def lookup_api_key(account_id)
     Account.find_by!(stripe_account_id: account_id).api_key
   rescue ActiveRecord::RecordNotFound
-    # whoops something went wrong - error handling
+    # Send numeric error codes to reply back in head
+    # See Rack::Utils::SYMBOL_TO_STATUS_CODE for a full list of valid status symbols.
+    raise StripeEvent::ProcessError.new(400)
   end
 end
 

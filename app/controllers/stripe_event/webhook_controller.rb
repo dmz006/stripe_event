@@ -11,7 +11,7 @@ module StripeEvent
       log_error(e)
       head :bad_request
     rescue StripeEvent::ProcessError => e
-      head e.to_i
+      head e.message.to_i
     end
 
     private
