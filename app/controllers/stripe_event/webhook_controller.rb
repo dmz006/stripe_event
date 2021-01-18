@@ -10,6 +10,8 @@ module StripeEvent
     rescue Stripe::SignatureVerificationError => e
       log_error(e)
       head :bad_request
+    rescue StripeEvent::ProcessError => e
+      head e
     end
 
     private
